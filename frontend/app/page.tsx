@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import GetStartedCode from "@/app/components/get-started-code";
 import { AllPosts } from "@/app/components/posts";
+import SearchPosts from "@/app/components/search-posts";
 import SideBySideIcons from "@/app/components/side-by-side-icons";
 import { sanityFetch } from "@/sanity/lib/live";
 import { settingsQuery } from "@/sanity/lib/queries";
@@ -76,6 +77,9 @@ export default async function Page() {
       <div className="border-gray-100 border-t bg-gray-50">
         <div className="container">
           <aside className="py-12 sm:py-20">
+            <div className="mb-6">
+              <SearchPosts />
+            </div>
             <Suspense>{await AllPosts()}</Suspense>
           </aside>
         </div>
