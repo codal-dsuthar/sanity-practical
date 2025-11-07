@@ -32,18 +32,19 @@ export const post = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'content',
-      title: 'Content',
+      name: 'body',
+      title: 'Body',
       type: 'blockContent',
     }),
     defineField({
-      name: 'excerpt',
-      title: 'Excerpt',
+      name: 'summary',
+      title: 'Summary',
+      description: 'High-level description of the blog post',
       type: 'text',
     }),
     defineField({
-      name: 'coverImage',
-      title: 'Cover Image',
+      name: 'relatedImage',
+      title: 'Related Image',
       type: 'image',
       options: {
         hotspot: true,
@@ -58,9 +59,8 @@ export const post = defineType({
           title: 'Alternative text',
           description: 'Important for SEO and accessibility.',
           validation: (rule) => {
-            // Custom validation to ensure alt text is provided if the image is present. https://www.sanity.io/docs/validation
             return rule.custom((alt, context) => {
-              if ((context.document?.coverImage as any)?.asset?._ref && !alt) {
+              if ((context.document?.relatedImage as any)?.asset?._ref && !alt) {
                 return 'Required'
               }
               return true
@@ -68,33 +68,37 @@ export const post = defineType({
           },
         },
       ],
-      validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'date',
-      title: 'Date',
+      name: 'publishDate',
+      title: 'Publish Date',
       type: 'datetime',
       initialValue: () => new Date().toISOString(),
+    }),
+    defineField({
+      name: 'updatedDate',
+      title: 'Updated Date',
+      type: 'datetime',
     }),
     defineField({
       name: 'author',
       title: 'Author',
       type: 'reference',
       to: [{type: 'person'}],
+      validation: (rule) => rule.required(),
     }),
   ],
   // List preview configuration. https://www.sanity.io/docs/previews-list-views
   preview: {
     select: {
       title: 'title',
-      authorFirstName: 'author.firstName',
-      authorLastName: 'author.lastName',
-      date: 'date',
-      media: 'coverImage',
+      authorName: 'author.name',
+      date: 'publishDate',
+      media: 'relatedImage',
     },
-    prepare({title, media, authorFirstName, authorLastName, date}) {
+    prepare({title, media, authorName, date}) {
       const subtitles = [
-        authorFirstName && authorLastName && `by ${authorFirstName} ${authorLastName}`,
+        authorName && `by ${authorName}`,
         date && `on ${format(parseISO(date), 'LLL d, yyyy')}`,
       ].filter(Boolean)
 

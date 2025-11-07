@@ -13,20 +13,30 @@ export const person = defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'firstName',
-      title: 'First Name',
+      name: 'name',
+      title: 'Name',
       type: 'string',
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'lastName',
-      title: 'Last Name',
-      type: 'string',
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'name',
+        maxLength: 96,
+        isUnique: (value, context) => context.defaultIsUnique(value, context),
+      },
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'picture',
-      title: 'Picture',
+      name: 'bio',
+      title: 'Bio',
+      type: 'blockContent',
+    }),
+    defineField({
+      name: 'headshotImage',
+      title: 'Headshot Image',
       type: 'image',
       fields: [
         defineField({
@@ -35,9 +45,8 @@ export const person = defineType({
           title: 'Alternative text',
           description: 'Important for SEO and accessibility.',
           validation: (rule) => {
-            // Custom validation to ensure alt text is provided if the image is present. https://www.sanity.io/docs/validation
             return rule.custom((alt, context) => {
-              if ((context.document?.picture as any)?.asset?._ref && !alt) {
+              if ((context.document?.headshotImage as any)?.asset?._ref && !alt) {
                 return 'Required'
               }
               return true
@@ -51,21 +60,19 @@ export const person = defineType({
           imageDescriptionField: 'alt',
         },
       },
-      validation: (rule) => rule.required(),
     }),
   ],
   // List preview configuration. https://www.sanity.io/docs/previews-list-views
   preview: {
     select: {
-      firstName: 'firstName',
-      lastName: 'lastName',
-      picture: 'picture',
+      name: 'name',
+      media: 'headshotImage',
     },
     prepare(selection) {
       return {
-        title: `${selection.firstName} ${selection.lastName}`,
+        title: selection.name,
         subtitle: 'Person',
-        media: selection.picture,
+        media: selection.media,
       }
     },
   },
