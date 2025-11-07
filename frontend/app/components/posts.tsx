@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { createDataAttribute } from "next-sanity";
 import Avatar from "@/app/components/avatar";
-import DateComponent from "@/app/components/date";
-import OnBoarding from "@/app/components/onboarding";
 import { sanityFetch } from "@/sanity/lib/live";
 import { allPostsQuery, morePostsQuery } from "@/sanity/lib/queries";
 import type { AllPostsQueryResult } from "@/sanity.types";
+import DateComponent from "./date";
+import Onboarding from "./onboarding";
 
 const Post = ({ post }: { post: AllPostsQueryResult[number] }) => {
   const { _id, title, slug, excerpt, date, author } = post;
@@ -100,7 +100,7 @@ export const AllPosts = async () => {
   const { data } = await sanityFetch({ query: allPostsQuery });
 
   if (!data || data.length === 0) {
-    return <OnBoarding />;
+    return <Onboarding />;
   }
 
   return (

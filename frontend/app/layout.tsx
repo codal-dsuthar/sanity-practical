@@ -8,8 +8,6 @@ import { toPlainText, VisualEditing } from "next-sanity";
 import { Toaster } from "sonner";
 
 import DraftModeToast from "@/app/components/draft-node-toast";
-import Footer from "@/app/components/footer";
-import Header from "@/app/components/header";
 import {
   description as demoDescription,
   title as demoTitle,
@@ -18,6 +16,8 @@ import { SanityLive, sanityFetch } from "@/sanity/lib/live";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 import { handleError } from "./client-utils";
+import Footer from "./components/footer";
+import Header from "./components/header";
 
 /**
  * Generate metadata for the page.
