@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Head from "next/head";
-import { PageOnboarding } from "@/app/components/Onboarding";
-import PageBuilderPage from "@/app/components/PageBuilder";
+import { PageOnboarding } from "@/app/components/onboarding";
+import PageBuilderPage from "@/app/components/page-builder";
 import { sanityFetch } from "@/sanity/lib/live";
 import { getPageQuery, pagesSlugs } from "@/sanity/lib/queries";
 import type { GetPageQueryResult } from "@/sanity.types";

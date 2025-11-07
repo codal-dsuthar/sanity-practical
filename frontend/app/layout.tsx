@@ -7,10 +7,13 @@ import { draftMode } from "next/headers";
 import { toPlainText, VisualEditing } from "next-sanity";
 import { Toaster } from "sonner";
 
-import DraftModeToast from "@/app/components/DraftModeToast";
-import Footer from "@/app/components/Footer";
-import Header from "@/app/components/Header";
-import * as demo from "@/sanity/lib/demo";
+import DraftModeToast from "@/app/components/draft-node-toast";
+import Footer from "@/app/components/footer";
+import Header from "@/app/components/header";
+import {
+  description as demoDescription,
+  title as demoTitle,
+} from "@/sanity/lib/demo";
 import { SanityLive, sanityFetch } from "@/sanity/lib/live";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
@@ -26,8 +29,8 @@ export async function generateMetadata(): Promise<Metadata> {
     // Metadata should never contain stega
     stega: false,
   });
-  const title = settings?.title || demo.title;
-  const description = settings?.description || demo.description;
+  const title = settings?.title || demoTitle;
+  const description = settings?.description || demoDescription;
 
   const ogImage = resolveOpenGraphImage(settings?.ogImage);
   let metadataBase: URL | undefined;

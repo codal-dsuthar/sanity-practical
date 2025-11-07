@@ -5,63 +5,92 @@ import {
   createDataAttribute,
 } from "next-sanity";
 import { dataset, projectId, studioUrl } from "@/sanity/lib/api";
-import type { Link } from "@/sanity.types";
+import type { Link, SanityImageCrop } from "@/sanity.types";
 
 const imageBuilder = createImageUrlBuilder({
   projectId: projectId || "",
   dataset: dataset || "",
 });
 
-export const urlForImage = (source: any) => {
-  // Ensure that source image contains a valid reference
-  if (!source?.asset?._ref) {
+export const urlForImage = (source: unknown) => {
+  if (!source || typeof source !== "object") {
     return;
   }
 
-  const imageRef = source?.asset?._ref;
-  const crop = source.crop;
+  const src = source as {
+    asset?: { _ref?: string };
+    crop?: SanityImageCrop;
+  };
 
-  // get the image's og dimensions
+  if (!src.asset?._ref) {
+    return;
+  }
+
+  const imageRef = src.asset._ref as string;
+  const crop = src.crop;
+
   const { width, height } = getImageDimensions(imageRef);
 
   if (crop) {
-    // compute the cropped image's area
-    const croppedWidth = Math.floor(width * (1 - (crop.right + crop.left)));
+    const {
+      left: cLeft = 0,
+      right = 0,
+      top: cTop = 0,
+      bottom: cBottom = 0,
+    } = crop;
 
-    const croppedHeight = Math.floor(height * (1 - (crop.top + crop.bottom)));
+    const croppedWidth = Math.floor(width * (1 - (right + cLeft)));
+    const croppedHeight = Math.floor(height * (1 - (cTop + cBottom)));
 
-    // compute the cropped image's position
-    const left = Math.floor(width * crop.left);
-    const top = Math.floor(height * crop.top);
+    const left = Math.floor(width * cLeft);
+    const topPx = Math.floor(height * cTop);
 
-    // gather into a url
     return imageBuilder
       ?.image(source)
-      .rect(left, top, croppedWidth, croppedHeight)
+      .rect(left, topPx, croppedWidth, croppedHeight)
       .auto("format");
   }
 
   return imageBuilder?.image(source).auto("format");
 };
 
-export function resolveOpenGraphImage(image: any, width = 1200, height = 627) {
+export function resolveOpenGraphImage(
+  image: unknown,
+  width = 1200,
+  height = 627
+) {
   if (!image) {
     return;
   }
-  const url = urlForImage(image)?.width(1200).height(627).fit("crop").url();
+
+  const builder = urlForImage(image);
+  if (!builder) {
+    return;
+  }
+
+  let url = builder.width(width).height(height).url();
+  if (url) {
+    try {
+      const parsed = new URL(url);
+      parsed.searchParams.set("fit", "crop");
+      url = parsed.toString();
+    } catch {
+      console.warn("Failed to parse image URL for Open Graph image.");
+    }
+  }
   if (!url) {
     return;
   }
-  return { url, alt: image?.alt as string, width, height };
+
+  const img = image as { alt?: string };
+  return { url, alt: img.alt as string, width, height };
 }
 
-// Depending on the type of link, we need to fetch the corresponding page, post, or URL.  Otherwise return null.
 export function linkResolver(link: Link | undefined) {
   if (!link) {
     return null;
   }
 
-  // If linkType is not set but href is, lets set linkType to "href".  This comes into play when pasting links into the portable text editor because a link type is not assumed.
   if (!link.linkType && link.href) {
     link.linkType = "href";
   }

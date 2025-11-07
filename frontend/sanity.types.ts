@@ -45,12 +45,12 @@ export type InfoSection = {
   heading?: string;
   subheading?: string;
   content?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
+    children?: {
+      marks?: string[];
       text?: string;
       _type: "span";
       _key: string;
-    }>;
+    }[];
     style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
     listItem?: "bullet" | "number";
     markDefs?: Array<{
@@ -63,6 +63,8 @@ export type InfoSection = {
         [internalGroqTypeReferenceTo]?: "page";
       };
       post?: {
+        /* eslint-disable */
+
         _ref: string;
         _type: "reference";
         _weak?: boolean;
@@ -79,12 +81,12 @@ export type InfoSection = {
 };
 
 export type BlockContent = Array<{
-  children?: Array<{
-    marks?: Array<string>;
+  children?: {
+    marks?: string[];
     text?: string;
     _type: "span";
     _key: string;
-  }>;
+  }[];
   style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
   listItem?: "bullet" | "number";
   markDefs?: Array<{
@@ -119,12 +121,12 @@ export type Settings = {
   _rev: string;
   title: string;
   description?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
+    children?: {
+      marks?: string[];
       text?: string;
       _type: "span";
       _key: string;
-    }>;
+    }[];
     style?: "normal";
     listItem?: never;
     markDefs?: Array<{
@@ -296,20 +298,20 @@ export type AssistInstructionContext = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  context?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
+  context?: {
+    children?: {
+      marks?: string[];
       text?: string;
       _type: "span";
       _key: string;
-    }>;
+    }[];
     style?: "normal";
     listItem?: never;
     markDefs?: null;
     level?: number;
     _type: "block";
     _key: string;
-  }>;
+  }[];
 };
 
 export type SanityAssistInstructionUserInput = {
@@ -318,10 +320,10 @@ export type SanityAssistInstructionUserInput = {
   description?: string;
 };
 
-export type SanityAssistInstructionPrompt = Array<{
-  children?: Array<
+export type SanityAssistInstructionPrompt = {
+  children?: (
     | {
-        marks?: Array<string>;
+        marks?: string[];
         text?: string;
         _type: "span";
         _key: string;
@@ -335,14 +337,14 @@ export type SanityAssistInstructionPrompt = Array<{
     | ({
         _key: string;
       } & SanityAssistInstructionUserInput)
-  >;
+  )[];
   style?: "normal";
   listItem?: never;
   markDefs?: null;
   level?: number;
   _type: "block";
   _key: string;
-}>;
+}[];
 
 export type SanityAssistInstructionFieldRef = {
   _type: "sanity.assist.instruction.fieldRef";
@@ -537,16 +539,16 @@ export type SettingsQueryResult = {
   _updatedAt: string;
   _rev: string;
   title: string;
-  description?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
+  description?: {
+    children?: {
+      marks?: string[];
       text?: string;
       _type: "span";
       _key: string;
-    }>;
+    }[];
     style?: "normal";
     listItem?: never;
-    markDefs?: Array<{
+    markDefs?: {
       linkType?: "href" | "page" | "post";
       href?: string;
       page?: {
@@ -564,11 +566,11 @@ export type SettingsQueryResult = {
       openInNewTab?: boolean;
       _type: "link";
       _key: string;
-    }>;
+    }[];
     level?: number;
     _type: "block";
     _key: string;
-  }>;
+  }[];
   ogImage?: {
     asset?: {
       _ref: string;
@@ -614,36 +616,40 @@ export type GetPageQueryResult = {
         _type: "infoSection";
         heading?: string;
         subheading?: string;
-        content: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?:
-            | "blockquote"
-            | "h1"
-            | "h2"
-            | "h3"
-            | "h4"
-            | "h5"
-            | "h6"
-            | "normal";
-          listItem?: "bullet" | "number";
-          markDefs: Array<{
-            linkType?: "href" | "page" | "post";
-            href?: string;
-            page: string | null;
-            post: string | null;
-            openInNewTab?: boolean;
-            _type: "link";
-            _key: string;
-          }> | null;
-          level?: number;
-          _type: "block";
-          _key: string;
-        }> | null;
+        content:
+          | {
+              children?: {
+                marks?: string[];
+                text?: string;
+                _type: "span";
+                _key: string;
+              }[];
+              style?:
+                | "blockquote"
+                | "h1"
+                | "h2"
+                | "h3"
+                | "h4"
+                | "h5"
+                | "h6"
+                | "normal";
+              listItem?: "bullet" | "number";
+              markDefs:
+                | {
+                    linkType?: "href" | "page" | "post";
+                    href?: string;
+                    page: string | null;
+                    post: string | null;
+                    openInNewTab?: boolean;
+                    _type: "link";
+                    _key: string;
+                  }[]
+                | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }[]
+          | null;
       }
   > | null;
 } | null;
@@ -796,6 +802,7 @@ export type PagesSlugsResult = Array<{
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
+  // biome-ignore lint/style/useConsistentTypeDefinitions: sanity typegen
   interface SanityQueries {
     '*[_type == "settings"][0]': SettingsQueryResult;
     '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n,\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': GetPageQueryResult;

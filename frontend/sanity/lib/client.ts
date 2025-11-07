@@ -9,11 +9,9 @@ export const client = createClient({
   apiVersion,
   useCdn: true,
   perspective: "published",
-  token, // Required if you have a private dataset
+  token,
   stega: {
     studioUrl,
-    // Set logger to 'console' for more verbose logging
-    // logger: console,
     filter: (props) => {
       if (props.sourcePath.at(-1) === "title") {
         return true;

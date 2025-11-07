@@ -1,5 +1,5 @@
 import { Image } from "next-sanity/image";
-import DateComponent from "@/app/components/Date";
+import DateComponent from "@/app/components/date";
 import { urlForImage } from "@/sanity/lib/utils";
 import type { Person } from "@/sanity.types";
 
@@ -14,13 +14,24 @@ export default function Avatar({ person, date, small = false }: Props) {
   const lastName = person?.lastName ?? null;
   const picture = person?.picture ?? null;
 
-  function AvatarImage({ img, smallFlag }: { img: Person["picture"] | null | undefined; smallFlag: boolean }) {
+  function AvatarImage({
+    img,
+    smallFlag,
+  }: {
+    img: Person["picture"] | null | undefined;
+    smallFlag: boolean;
+  }) {
     if (!img?.asset?._ref) {
       return null;
     }
 
     const builder = urlForImage(img);
-    const src = (builder?.height(smallFlag ? 64 : 96).width(smallFlag ? 64 : 96).auto("format").url() as string) ?? "";
+    const src =
+      (builder
+        ?.height(smallFlag ? 64 : 96)
+        .width(smallFlag ? 64 : 96)
+        .auto("format")
+        .url() as string) ?? "";
 
     return (
       <div className={`${smallFlag ? "mr-2 h-6 w-6" : "mr-4 h-9 w-9"}`}>

@@ -13,16 +13,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     query: sitemapData,
   });
   const headersList = await headers();
-  const sitemap: MetadataRoute.Sitemap = [];
+  const sitemapEntries: MetadataRoute.Sitemap = [];
   const domain: string = headersList.get("host") as string;
-  sitemap.push({
+  sitemapEntries.push({
     url: domain as string,
     lastModified: new Date(),
     priority: 1,
     changeFrequency: "monthly",
   });
 
-  if (allPostsAndPages != null && allPostsAndPages.data.length != 0) {
+  if (allPostsAndPages != null && allPostsAndPages.data.length !== 0) {
     let priority: number;
     let changeFrequency:
       | "monthly"
@@ -47,8 +47,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           changeFrequency = "never";
           url = `${domain}/posts/${p.slug}`;
           break;
+        default:
+          continue;
       }
-      sitemap.push({
+      sitemapEntries.push({
         lastModified: p._updatedAt || new Date(),
         priority,
         changeFrequency,
@@ -57,5 +59,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  return sitemap;
+  return sitemapEntries;
 }

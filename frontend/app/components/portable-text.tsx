@@ -25,13 +25,12 @@ export default function CustomPortableText({
 }) {
   const components: PortableTextComponents = {
     block: {
-      h1: ({ children, value }) => (
-        // Add an anchor to the h1
+      h1: ({ children, value: block }) => (
         <h1 className="group relative">
           {children}
           <a
             className="-ml-6 absolute top-0 bottom-0 left-0 flex items-center opacity-0 transition-opacity group-hover:opacity-100"
-            href={`#${value?._key}`}
+            href={`#${block?._key}`}
           >
             <svg
               className="h-4 w-4"
@@ -40,6 +39,7 @@ export default function CustomPortableText({
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
+              <title>Permalink</title>
               <path
                 d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
                 strokeLinecap="round"
@@ -50,33 +50,31 @@ export default function CustomPortableText({
           </a>
         </h1>
       ),
-      h2: ({ children, value }) => {
-        // Add an anchor to the h2
-        return (
-          <h2 className="group relative">
-            {children}
-            <a
-              className="-ml-6 absolute top-0 bottom-0 left-0 flex items-center opacity-0 transition-opacity group-hover:opacity-100"
-              href={`#${value?._key}`}
+      h2: ({ children, value: block }) => (
+        <h2 className="group relative">
+          {children}
+          <a
+            className="-ml-6 absolute top-0 bottom-0 left-0 flex items-center opacity-0 transition-opacity group-hover:opacity-100"
+            href={`#${block?._key}`}
+          >
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                />
-              </svg>
-            </a>
-          </h2>
-        );
-      },
+              <title>Permalink</title>
+              <path
+                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+              />
+            </svg>
+          </a>
+        </h2>
+      ),
     },
     marks: {
       link: ({ children, value: link }) => (

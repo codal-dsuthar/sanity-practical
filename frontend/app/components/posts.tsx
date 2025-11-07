@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { createDataAttribute } from "next-sanity";
 import Avatar from "@/app/components/avatar";
-import DateComponent from "@/app/components/Date";
-import OnBoarding from "@/app/components/Onboarding";
+import DateComponent from "@/app/components/date";
+import OnBoarding from "@/app/components/onboarding";
 import { sanityFetch } from "@/sanity/lib/live";
 import { allPostsQuery, morePostsQuery } from "@/sanity/lib/queries";
 import type { AllPostsQueryResult } from "@/sanity.types";
@@ -36,7 +36,7 @@ const Post = ({ post }: { post: AllPostsQueryResult[number] }) => {
         </p>
       </div>
       <div className="mt-6 flex items-center justify-between border-gray-100 border-t pt-4">
-  {author?.firstName && author?.lastName && (
+        {author?.firstName && author?.lastName && (
           <div className="flex items-center">
             <Avatar person={author} small={true} />
           </div>

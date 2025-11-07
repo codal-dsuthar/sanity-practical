@@ -4,8 +4,8 @@ import type { PortableTextBlock } from "next-sanity";
 import { Suspense } from "react";
 
 import Avatar from "@/app/components/avatar";
-import CoverImage from "@/app/components/CoverImage";
-import PortableText from "@/app/components/PortableText";
+import CoverImage from "@/app/components/cover-image";
+import PortableText from "@/app/components/portable-text";
 import { MorePosts } from "@/app/components/posts";
 import { sanityFetch } from "@/sanity/lib/live";
 import { postPagesSlugs, postQuery } from "@/sanity/lib/queries";
@@ -22,7 +22,6 @@ type Props = {
 export async function generateStaticParams() {
   const { data } = await sanityFetch({
     query: postPagesSlugs,
-    // Use the published perspective in generateStaticParams
     perspective: "published",
     stega: false,
   });
@@ -41,7 +40,6 @@ export async function generateMetadata(
   const { data: post } = await sanityFetch({
     query: postQuery,
     params,
-    // Metadata should never contain stega
     stega: false,
   });
   const previousImages = (await parent).openGraph?.images || [];
@@ -93,12 +91,13 @@ export default async function PostPage(props: Props) {
                   <CoverImage image={post.coverImage} priority />
                 )}
               </div>
-              {Array.isArray(post.content) && (post.content as PortableTextBlock[]).length > 0 && (
-                <PortableText
-                  className="max-w-2xl"
-                  value={post.content as PortableTextBlock[]}
-                />
-              )}
+              {Array.isArray(post.content) &&
+                (post.content as PortableTextBlock[]).length > 0 && (
+                  <PortableText
+                    className="max-w-2xl"
+                    value={post.content as PortableTextBlock[]}
+                  />
+                )}
             </article>
           </div>
         </div>

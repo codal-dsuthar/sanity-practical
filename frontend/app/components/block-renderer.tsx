@@ -1,8 +1,9 @@
 import React from "react";
 
-import Cta from "@/app/components/Cta";
-import Info from "@/app/components/InfoSection";
+import Cta from "@/app/components/cta";
+import Info from "@/app/components/info-section";
 import { dataAttr } from "@/sanity/lib/utils";
+import type { CallToAction, InfoSection } from "@/sanity.types";
 
 type BlockType = {
   _type: string;
@@ -25,9 +26,17 @@ type BlocksType = {
   [key: string]: React.FC<BlockComponentProps>;
 };
 
+const CtaAdapter: React.FC<BlockComponentProps> = ({ block, index }) => (
+  <Cta block={block as unknown as CallToAction} index={index} />
+);
+
+const InfoAdapter: React.FC<BlockComponentProps> = ({ block, index }) => (
+  <Info block={block as unknown as InfoSection} index={index} />
+);
+
 const Blocks: BlocksType = {
-  callToAction: Cta,
-  infoSection: Info,
+  callToAction: CtaAdapter,
+  infoSection: InfoAdapter,
 };
 
 /**

@@ -21,7 +21,7 @@ export default function CTA({ block }: CtaProps) {
           </div>
 
           <Suspense fallback={null}>
-            <div className="flex items-center gap-x-6 lg:mt-0 lg:flex-shrink-0">
+            <div className="flex items-center gap-x-6 lg:mt-0 lg:shrink-0">
               <ResolvedLink
                 className="mr-6 flex items-center gap-2 rounded-full bg-black px-6 py-3 text-white transition-colors duration-200 hover:bg-blue focus:bg-blue"
                 link={block.link}

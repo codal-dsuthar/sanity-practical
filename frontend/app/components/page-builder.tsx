@@ -89,7 +89,6 @@ export default function PageBuilder({ page }: PageBuilderPageProps) {
     PageBuilderBlock[] | undefined,
     SanityDocument<PageData>
   >(page?.pageBuilder || [], (currentSections, action) => {
-
     if (action.id !== page?._id) {
       return currentSections;
     }

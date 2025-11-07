@@ -1,7 +1,7 @@
 import { PortableText } from "@portabletext/react";
 import Link from "next/link";
 import { Suspense } from "react";
-import GetStartedCode from "@/app/components/GetStartedCode";
+import GetStartedCode from "@/app/components/get-started-code";
 import { AllPosts } from "@/app/components/posts";
 import SideBySideIcons from "@/app/components/side-by-side-icons";
 import { sanityFetch } from "@/sanity/lib/live";
@@ -16,7 +16,7 @@ export default async function Page() {
     <>
       <div className="relative">
         <div className="relative bg-[url(/images/tile-1-black.png)] bg-size-[5px]">
-          <div className="absolute top-0 h-full w-full bg-gradient-to-b from-white" />
+          <div className="absolute top-0 h-full w-full bg-linear-to-b from-white" />
           <div className="container">
             <div className="relative mx-auto flex min-h-[40vh] max-w-2xl flex-col items-center justify-center space-y-6 pt-10 pb-30 lg:max-w-4xl lg:px-12 xl:pt-20">
               <div className="flex flex-col items-center gap-4">
@@ -64,6 +64,7 @@ export default async function Page() {
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
+                    <title>Sanity docs</title>
                     <path d="M10 6V8H5V19H16V14H18V20C18 20.5523 17.5523 21 17 21H4C3.44772 21 3 20.5523 3 20V7C3 6.44772 3.44772 6 4 6H10ZM21 3V12L17.206 8.207L11.2071 14.2071L9.79289 12.7929L15.792 6.793L12 3H21Z" />
                   </svg>
                 </Link>
