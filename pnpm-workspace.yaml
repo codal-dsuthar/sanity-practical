@@ -1,0 +1,9 @@
+packages:
+  - frontend
+  - studio
+
+onlyBuiltDependencies:
+  - '@vercel/speed-insights'
+  - esbuild
+  - rollup
+  - sharp

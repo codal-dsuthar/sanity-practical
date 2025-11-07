@@ -9,13 +9,13 @@ importers:
   .:
     dependencies:
       '@sanity/assist':
-        specifier: ^5.0.0
+        specifier: ^5.0.2
         version: 5.0.2(@emotion/is-prop-valid@1.2.2)(@sanity/mutator@4.14.1(@types/react@19.2.2))(react-dom@19.2.0(react@19.2.0))(react-is@19.2.0)(react@19.2.0)(sanity@4.14.1(@emotion/is-prop-valid@1.2.2)(@portabletext/sanity-bridge@1.2.0(@sanity/schema@4.14.1(@types/react@19.2.2)(debug@4.4.3))(@sanity/types@4.14.1(@types/react@19.2.2)(debug@4.4.3)))(@types/node@24.10.0)(@types/react@19.2.2)(immer@10.2.0)(jiti@2.6.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(styled-components@6.1.19(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)(yaml@2.8.1))(styled-components@6.1.19(react-dom@19.2.0(react@19.2.0))(react@19.2.0))
       '@sanity/icons':
         specifier: ^3.7.4
         version: 3.7.4(react@19.2.0)
       '@sanity/vision':
-        specifier: ^4.5.0
+        specifier: ^4.14.1
         version: 4.14.1(@babel/runtime@7.28.4)(@codemirror/lint@6.9.2)(@codemirror/theme-one-dark@6.1.3)(@emotion/is-prop-valid@1.2.2)(codemirror@6.0.2)(react-dom@19.2.0(react@19.2.0))(react-is@19.2.0)(react@19.2.0)(styled-components@6.1.19(react-dom@19.2.0(react@19.2.0))(react@19.2.0))
       date-fns:
         specifier: ^4.1.0
@@ -24,16 +24,16 @@ importers:
         specifier: ^9.0.5
         version: 9.0.5
       react:
-        specifier: ^19.1.1
+        specifier: ^19.2.0
         version: 19.2.0
       react-dom:
-        specifier: ^19.1.1
+        specifier: ^19.2.0
         version: 19.2.0(react@19.2.0)
       rxjs:
         specifier: ^7.8.2
         version: 7.8.2
       sanity:
-        specifier: ^4.5.0
+        specifier: ^4.14.1
         version: 4.14.1(@emotion/is-prop-valid@1.2.2)(@portabletext/sanity-bridge@1.2.0(@sanity/schema@4.14.1(@types/react@19.2.2)(debug@4.4.3))(@sanity/types@4.14.1(@types/react@19.2.2)(debug@4.4.3)))(@types/node@24.10.0)(@types/react@19.2.2)(immer@10.2.0)(jiti@2.6.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(styled-components@6.1.19(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)(yaml@2.8.1)
       sanity-plugin-asset-source-unsplash:
         specifier: ^4.0.1
@@ -46,10 +46,10 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3)
       '@types/react':
-        specifier: ^19.1.11
+        specifier: ^19.2.2
         version: 19.2.2
       typescript:
-        specifier: ^5.9.2
+        specifier: ^5.9.3
         version: 5.9.3
 
 packages:
