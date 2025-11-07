@@ -1,18 +1,14 @@
 {
   "name": "sanity-training",
-  "description": "Next.js + Sanity: A Powerful Website Starter with Real-time Visual Editing",
+  "description": "Next.js + Sanity workspace providing a frontend and Sanity Studio for content-managed sites.",
   "keywords": [
-    "Sanity",
-    "Next.js",
-    "Headless CMS",
-    "Visual Editing",
-    "Live Content API (LCAPI)",
-    "Real-time"
+    "sanity",
+    "nextjs",
+    "headless-cms",
+    "visual-editing",
+    "content"
   ],
-  "homepage": "https://github.com/sanity-io/sanity-template-nextjs-clean#readme",
-  "bugs": {
-    "url": "https://github.com/sanity-io/sanity-template-nextjs-clean/issues"
-  },
+  
   "workspaces": [
     "studio",
     "frontend"
@@ -22,7 +18,7 @@
     "dev:next": "npm run dev --workspace=frontend",
     "dev:studio": "npm run dev --workspace=studio",
     "format": "prettier --cache --write .",
-    "import-sample-data": "cd studio && sanity dataset import sample-data.tar.gz --replace",
+    
     "lint": "npm run lint --workspace=frontend",
     "type-check": "npm run type-check --workspaces"
   },
