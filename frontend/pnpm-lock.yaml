@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@portabletext/react':
+        specifier: ^5.0.0
+        version: 5.0.0(react@19.2.0)
+      '@sanity/asset-utils':
+        specifier: ^2.3.0
+        version: 2.3.0
       '@sanity/client':
         specifier: ^7.9.0
         version: 7.12.1(debug@4.4.3)
