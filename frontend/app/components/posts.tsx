@@ -18,20 +18,17 @@ const Post = ({ post }: { post: AllPostsQueryResult[number] }) => {
 
   return (
     <article
-      className="relative flex flex-col justify-between rounded-sm border border-gray-200 bg-gray-50 p-6 transition-colors hover:bg-white"
+      className="group relative flex flex-col justify-between rounded-xl border border-neutral-200 bg-white p-6 shadow-sm transition-all hover:shadow"
       data-sanity={attr()}
       key={_id}
     >
-      <Link
-        className="underline transition-colors hover:text-brand"
-        href={`/posts/${slug}`}
-      >
-        <span className="absolute inset-0 z-10" />
-      </Link>
+      <Link className="absolute inset-0 z-10" href={`/posts/${slug}`} />
       <div>
-        <h3 className="mb-4 font-bold text-2xl leading-tight">{title}</h3>
+        <h3 className="mb-4 font-bold text-2xl leading-tight transition-colors group-hover:text-brand">
+          {title}
+        </h3>
 
-        <p className="line-clamp-3 max-w-[70ch] text-gray-600 text-sm leading-6">
+        <p className="line-clamp-3 max-w-[70ch] text-base text-gray-700 leading-7">
           {excerpt}
         </p>
       </div>
@@ -67,7 +64,9 @@ const Posts = ({
     {subHeading && (
       <p className="mt-2 text-gray-600 text-lg leading-8">{subHeading}</p>
     )}
-    <div className="space-y-6 pt-6">{children}</div>
+    <div className="grid gap-6 pt-6 sm:grid-cols-2 lg:grid-cols-3">
+      {children}
+    </div>
   </div>
 );
 

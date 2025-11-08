@@ -85,7 +85,10 @@ export default function CustomPortableText({
 
   return (
     <div
-      className={["prose prose-a:text-brand", className]
+      className={[
+        "prose prose-lg mx-auto prose-img:rounded-xl prose-a:text-brand text-gray-800",
+        className,
+      ]
         .filter(Boolean)
         .join(" ")}
     >

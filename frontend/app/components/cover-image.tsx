@@ -33,7 +33,7 @@ export default function CoverImage(
         return (
           <Image
             alt={stegaClean(source?.alt) || ""}
-            className="object-cover"
+            className="h-auto w-full object-cover"
             height={dims.height}
             priority={priority}
             src={urlForImage(source)?.url() as string}
@@ -43,5 +43,8 @@ export default function CoverImage(
       })()
     : null;
 
-  return <div className="relative">{image}</div>;
+  return (
+    // sleeker: lighter shadow for a flatter, more modern look
+    <div className="w-full overflow-hidden rounded-xl shadow-sm">{image}</div>
+  );
 }

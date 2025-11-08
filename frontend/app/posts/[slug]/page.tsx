@@ -11,6 +11,8 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { postPagesSlugs, postQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 
+const WHITESPACE_REGEX = /\s+/g;
+
 type Props = {
   params: Promise<{ slug: string }>;
 };
@@ -68,6 +70,15 @@ export default async function PostPage(props: Props) {
     return notFound();
   }
 
+  // Estimate reading time (words / 200 wpm)
+  const contentText = Array.isArray(post.content)
+    ? (post.content as PortableTextBlock[])
+        .map((b) => (typeof b === "string" ? b : JSON.stringify(b)))
+        .join(" ")
+    : "";
+  const words = contentText.split(WHITESPACE_REGEX).filter(Boolean).length;
+  const readingTime = Math.max(1, Math.round(words / 200));
+
   return (
     <>
       <div className="">
@@ -75,17 +86,18 @@ export default async function PostPage(props: Props) {
           <div>
             <div className="mb-6 grid gap-6 border-gray-100 border-b pb-6">
               <div className="flex max-w-3xl flex-col gap-6">
-                <h2 className="font-bold text-4xl text-gray-900 tracking-tight sm:text-5xl lg:text-7xl">
+                <h2 className="font-extrabold text-4xl text-gray-900 leading-tight tracking-tight sm:text-5xl lg:text-6xl">
                   {post.title}
                 </h2>
               </div>
-              <div className="flex max-w-3xl items-center gap-4">
+              <div className="flex max-w-3xl items-center gap-4 text-gray-500 text-sm">
                 {post.author?.firstName && post.author?.lastName && (
                   <Avatar date={post.date} person={post.author} />
                 )}
+                <div className="ml-1">{readingTime} min read</div>
               </div>
             </div>
-            <article className="grid max-w-4xl gap-6">
+            <article className="mx-auto grid max-w-3xl gap-6">
               <div className="">
                 {post?.coverImage && (
                   <CoverImage image={post.coverImage} priority />
