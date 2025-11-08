@@ -18,11 +18,9 @@
     "@sanity/asset-utils": "^2.3.0",
     "@sanity/client": "^7.12.1",
     "@sanity/image-url": "^1.2.0",
-    "@sanity/uuid": "^3.0.2",
     "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/typography": "^0.5.19",
     "@vercel/speed-insights": "^1.2.0",
-    "autoprefixer": "^10.4.21",
     "date-fns": "^4.1.0",
     "next": "^16.0.1",
     "next-sanity": "^11.6.5",
@@ -35,18 +33,11 @@
     "tailwindcss": "^4.1.17"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.4",
     "@types/node": "^24.10.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.6",
     "typescript": "5.9.3",
     "ultracite": "6.3.2"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": [
-      "pnpm dlx ultracite fix"
-    ]
   }
 }

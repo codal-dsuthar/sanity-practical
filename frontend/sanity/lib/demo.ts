@@ -56,4 +56,4 @@ export const description = [
   },
 ];
 
-export const ogImageTitle = "A Next.js Blog with a Native Authoring Experience";
+// ogImageTitle removed from this demo module because it's defined/used elsewhere (studio initialValues)
