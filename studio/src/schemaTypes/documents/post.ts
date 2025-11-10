@@ -48,9 +48,6 @@ export const post = defineType({
       type: 'image',
       options: {
         hotspot: true,
-        aiAssist: {
-          imageDescriptionField: 'alt',
-        },
       },
       fields: [
         {
@@ -87,16 +84,38 @@ export const post = defineType({
       to: [{type: 'person'}],
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      description: 'Tags for categorizing and filtering posts (e.g., Featured, Technology, Design)',
+      of: [{type: 'string'}],
+      options: {
+        layout: 'tags',
+      },
+    }),
+    defineField({
+      name: 'featured',
+      title: 'Featured',
+      type: 'boolean',
+      description: 'Mark this post as featured',
+      initialValue: false,
+    }),
   ],
-  // List preview configuration. https://www.sanity.io/docs/previews-list-views
   preview: {
     select: {
       title: 'title',
-      authorName: 'author.name',
+      authorFirstName: 'author.firstName',
+      authorLastName: 'author.lastName',
+      authorUsername: 'author.username',
       date: 'publishDate',
       media: 'relatedImage',
     },
-    prepare({title, media, authorName, date}) {
+    prepare({title, media, authorFirstName, authorLastName, authorUsername, date}) {
+      const authorName = authorFirstName && authorLastName
+        ? `${authorFirstName} ${authorLastName}`
+        : authorUsername
+
       const subtitles = [
         authorName && `by ${authorName}`,
         date && `on ${format(parseISO(date), 'LLL d, yyyy')}`,
