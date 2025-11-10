@@ -1,24 +1,30 @@
 import { Image } from "next-sanity/image";
 import DateComponent from "@/app/components/date";
+import { getAuthorNames } from "@/lib/utils";
 import { urlForImage } from "@/sanity/lib/utils";
 import type { Person } from "@/sanity.types";
 
 type Props = {
-  person?: Partial<Person> & { picture?: Person["picture"] | null };
+  person?: Partial<Person> & { headshotImage?: Person["headshotImage"] | null };
   date?: string;
   small?: boolean;
 };
 
 export default function Avatar({ person, date, small = false }: Props) {
-  const firstName = person?.firstName ?? null;
-  const lastName = person?.lastName ?? null;
-  const picture = person?.picture ?? null;
+  // Use utility function to get names, falling back to splitting full name if needed
+  const { firstName, lastName } = person
+    ? getAuthorNames({
+        firstName: person.firstName ?? null,
+        lastName: person.lastName ?? null,
+      })
+    : { firstName: "", lastName: "" };
+  const headshotImage = person?.headshotImage ?? null;
 
   function AvatarImage({
     img,
     smallFlag,
   }: {
-    img: Person["picture"] | null | undefined;
+    img: Person["headshotImage"] | null | undefined;
     smallFlag: boolean;
   }) {
     if (!img?.asset?._ref) {
@@ -48,8 +54,8 @@ export default function Avatar({ person, date, small = false }: Props) {
 
   return (
     <div className="flex items-center font-mono">
-      {picture?.asset?._ref ? (
-        <AvatarImage img={picture} smallFlag={small} />
+      {headshotImage?.asset?._ref ? (
+        <AvatarImage img={headshotImage} smallFlag={small} />
       ) : (
         <div className="mr-1">By </div>
       )}

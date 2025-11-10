@@ -13,8 +13,20 @@ export const person = defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'name',
-      title: 'Name',
+      name: 'username',
+      title: 'Username',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'firstName',
+      title: 'First Name',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'lastName',
+      title: 'Last Name',
       type: 'string',
       validation: (rule) => rule.required(),
     }),
@@ -23,7 +35,7 @@ export const person = defineType({
       title: 'Slug',
       type: 'slug',
       options: {
-        source: 'name',
+        source: 'username',
         maxLength: 96,
         isUnique: (value, context) => context.defaultIsUnique(value, context),
       },
@@ -56,21 +68,20 @@ export const person = defineType({
       ],
       options: {
         hotspot: true,
-        aiAssist: {
-          imageDescriptionField: 'alt',
-        },
       },
     }),
   ],
-  // List preview configuration. https://www.sanity.io/docs/previews-list-views
   preview: {
     select: {
-      name: 'name',
+      firstName: 'firstName',
+      lastName: 'lastName',
+      username: 'username',
       media: 'headshotImage',
     },
     prepare(selection) {
+      const {firstName, lastName, username} = selection
       return {
-        title: selection.name,
+        title: firstName && lastName ? `${firstName} ${lastName}` : username,
         subtitle: 'Person',
         media: selection.media,
       }
