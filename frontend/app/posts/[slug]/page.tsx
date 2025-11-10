@@ -7,6 +7,7 @@ import Avatar from "@/app/components/avatar";
 import CoverImage from "@/app/components/cover-image";
 import PortableText from "@/app/components/portable-text";
 import { MorePosts } from "@/app/components/posts";
+import { getAuthorNames } from "@/lib/utils";
 import { sanityFetch } from "@/sanity/lib/live";
 import { postPagesSlugs, postQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
@@ -47,10 +48,17 @@ export async function generateMetadata(
   const previousImages = (await parent).openGraph?.images || [];
   const ogImage = resolveOpenGraphImage(post?.coverImage);
 
+  const authorNames = post?.author
+    ? getAuthorNames({
+        firstName: post.author.firstName ?? null,
+        lastName: post.author.lastName ?? null,
+      })
+    : null;
+
   return {
     authors:
-      post?.author?.firstName && post?.author?.lastName
-        ? [{ name: `${post.author.firstName} ${post.author.lastName}` }]
+      authorNames && (authorNames.firstName || authorNames.lastName)
+        ? [{ name: `${authorNames.firstName} ${authorNames.lastName}`.trim() }]
         : [],
     title: post?.title,
     description: post?.excerpt,
@@ -70,7 +78,6 @@ export default async function PostPage(props: Props) {
     return notFound();
   }
 
-  // Estimate reading time (words / 200 wpm)
   const contentText = Array.isArray(post.content)
     ? (post.content as PortableTextBlock[])
         .map((b) => (typeof b === "string" ? b : JSON.stringify(b)))
@@ -91,7 +98,7 @@ export default async function PostPage(props: Props) {
                 </h2>
               </div>
               <div className="flex max-w-3xl items-center gap-4 text-gray-500 text-sm">
-                {post.author?.firstName && post.author?.lastName && (
+                {post.author && (
                   <Avatar date={post.date} person={post.author} />
                 )}
                 <div className="ml-1">{readingTime} min read</div>

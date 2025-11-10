@@ -2,10 +2,16 @@ import Link from "next/link";
 import { createDataAttribute } from "next-sanity";
 import Avatar from "@/app/components/avatar";
 import { sanityFetch } from "@/sanity/lib/live";
-import { allPostsQuery, morePostsQuery } from "@/sanity/lib/queries";
+import {
+  allPostsQuery,
+  morePostsQuery,
+  paginatedPostsQuery,
+  postCountQuery,
+} from "@/sanity/lib/queries";
 import type { AllPostsQueryResult } from "@/sanity.types";
 import DateComponent from "./date";
 import Onboarding from "./onboarding";
+import { Pagination } from "./pagination";
 
 const Post = ({ post }: { post: AllPostsQueryResult[number] }) => {
   const { _id, title, slug, excerpt, date, author } = post;
@@ -15,6 +21,9 @@ const Post = ({ post }: { post: AllPostsQueryResult[number] }) => {
     type: "post",
     path: "title",
   });
+
+  const hasAuthorName =
+    author?.firstName || author?.lastName || author.username;
 
   return (
     <article
@@ -33,7 +42,7 @@ const Post = ({ post }: { post: AllPostsQueryResult[number] }) => {
         </p>
       </div>
       <div className="mt-6 flex items-center justify-between border-gray-100 border-t pt-4">
-        {author?.firstName && author?.lastName && (
+        {hasAuthorName && (
           <div className="flex items-center">
             <Avatar person={author} small={true} />
           </div>
@@ -111,5 +120,80 @@ export const AllPosts = async () => {
         <Post key={post._id} post={post} />
       ))}
     </Posts>
+  );
+};
+
+export const FilteredPosts = async ({
+  tag,
+  featured,
+  page = 1,
+}: {
+  tag?: string;
+  featured?: boolean;
+  page?: number;
+}) => {
+  const POSTS_PER_PAGE = 9;
+  const start = (page - 1) * POSTS_PER_PAGE;
+  const end = start + POSTS_PER_PAGE;
+
+  // Always pass parameters, but use null instead of undefined for GROQ
+  const normalizeParams = (params: Record<string, unknown>) =>
+    Object.fromEntries(
+      Object.entries(params).map(([key, value]) => [
+        key,
+        value === undefined ? null : value,
+      ])
+    );
+
+  const [{ data: posts }, { data: totalCount }] = await Promise.all([
+    sanityFetch({
+      query: paginatedPostsQuery,
+      params: normalizeParams({ tag, featured, start, end }),
+    }),
+    sanityFetch({
+      query: postCountQuery,
+      params: normalizeParams({ tag, featured }),
+    }),
+  ]);
+
+  if (!posts || posts.length === 0) {
+    return (
+      <div className="py-12 text-center">
+        <p className="text-gray-600">No posts found matching your filters.</p>
+      </div>
+    );
+  }
+
+  const totalPages = Math.ceil((totalCount || 0) / POSTS_PER_PAGE);
+
+  // Compute heading without nested ternary
+  let headingText = "All Posts";
+  if (tag) {
+    headingText = `Posts tagged "${tag}"`;
+  } else if (featured) {
+    headingText = "Featured Posts";
+  }
+
+  return (
+    <div>
+      <Posts
+        heading={headingText}
+        subHeading={`Showing ${posts.length} of ${totalCount} posts`}
+      >
+        {posts.map((post: AllPostsQueryResult[number]) => (
+          <Post key={post._id} post={post} />
+        ))}
+      </Posts>
+      {totalPages > 1 && (
+        <div className="mt-8">
+          <Pagination
+            currentPage={page}
+            featured={featured}
+            tag={tag}
+            totalPages={totalPages}
+          />
+        </div>
+      )}
+    </div>
   );
 };

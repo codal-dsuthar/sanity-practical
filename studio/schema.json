@@ -1234,7 +1234,7 @@
         },
         "optional": false
       },
-      "content": {
+      "body": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -1242,14 +1242,14 @@
         },
         "optional": true
       },
-      "excerpt": {
+      "summary": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
         "optional": true
       },
-      "coverImage": {
+      "relatedImage": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
@@ -1323,9 +1323,16 @@
             }
           }
         },
-        "optional": false
+        "optional": true
       },
-      "date": {
+      "publishDate": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "updatedDate": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
@@ -1359,6 +1366,23 @@
             }
           },
           "dereferencesTo": "person"
+        },
+        "optional": false
+      },
+      "tags": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "array",
+          "of": {
+            "type": "string"
+          }
+        },
+        "optional": true
+      },
+      "featured": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
         },
         "optional": true
       }
@@ -1399,6 +1423,13 @@
           "type": "string"
         }
       },
+      "username": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "firstName": {
         "type": "objectAttribute",
         "value": {
@@ -1413,7 +1444,23 @@
         },
         "optional": false
       },
-      "picture": {
+      "slug": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "slug"
+        },
+        "optional": false
+      },
+      "bio": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "blockContent"
+        },
+        "optional": true
+      },
+      "headshotImage": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
@@ -1487,7 +1534,7 @@
             }
           }
         },
-        "optional": false
+        "optional": true
       }
     }
   },
@@ -2361,21 +2408,21 @@
           "value": {
             "type": "number"
           },
-          "optional": true
+          "optional": false
         },
         "width": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": true
+          "optional": false
         },
         "aspectRatio": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": true
+          "optional": false
         }
       }
     }
@@ -2398,28 +2445,28 @@
           "value": {
             "type": "number"
           },
-          "optional": true
+          "optional": false
         },
         "y": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": true
+          "optional": false
         },
         "height": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": true
+          "optional": false
         },
         "width": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": true
+          "optional": false
         }
       }
     }
@@ -2442,28 +2489,28 @@
           "value": {
             "type": "number"
           },
-          "optional": true
+          "optional": false
         },
         "bottom": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": true
+          "optional": false
         },
         "left": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": true
+          "optional": false
         },
         "right": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
           },
-          "optional": true
+          "optional": false
         }
       }
     }

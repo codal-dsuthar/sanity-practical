@@ -16,13 +16,19 @@ export async function GET(req: Request) {
 
     const param = `*${q}*`;
 
-    const query = `*[_type == "post" && defined(slug.current) && (title match $q || excerpt match $q)] | order(date desc, _updatedAt desc) {
+    const query = `*[_type == "post" && defined(slug.current) && (title match $q || summary match $q)] | order(publishDate desc, _updatedAt desc) {
       _id,
       "slug": slug.current,
       title,
-      excerpt,
-      "date": coalesce(date, _updatedAt),
-      "author": author->{firstName, lastName}
+      "excerpt": summary,
+      "date": coalesce(publishDate, _updatedAt),
+      "author": author->{
+        name,
+        "firstName": coalesce(split(name, " ")[0], name),
+        "lastName": coalesce(split(name, " ")[1], "")
+      },
+      tags,
+      featured
     }`;
 
     const data = await client.fetch(query, { q: param });

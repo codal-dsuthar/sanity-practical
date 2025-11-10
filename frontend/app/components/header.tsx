@@ -9,9 +9,25 @@ export default function Header() {
             <span className="pl-2 font-semibold text-lg sm:text-2xl">Site</span>
           </Link>
 
-          {/* Minimal header: keep empty space for future links */}
-          <nav aria-hidden="true">
-            <ul className="flex items-center gap-4" />
+          <nav>
+            <ul className="flex items-center gap-4">
+              <li>
+                <Link
+                  className="text-gray-700 text-sm transition-colors hover:text-brand"
+                  href="/posts"
+                >
+                  Posts
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="rounded-md bg-brand px-4 py-2 text-sm text-white transition-colors hover:bg-brand/90"
+                  href="/submit-post"
+                >
+                  Submit Post
+                </Link>
+              </li>
+            </ul>
           </nav>
         </div>
       </div>
