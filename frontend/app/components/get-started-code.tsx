@@ -12,7 +12,7 @@ export default function GetStartedCode() {
   };
 
   return (
-    <div className="mt-6 flex flex-col items-center gap-4 rounded-xl bg-gray-900 p-4 text-center font-mono text-sm text-white shadow-xl selection:bg-blue selection:text-white md:inline-flex md:flex-row md:whitespace-nowrap md:rounded-full md:py-2 md:pr-2 md:pl-6 lg:text-base">
+    <div className="mt-6 flex flex-col items-center gap-4 rounded-xl bg-gray-900 p-4 text-center font-mono text-sm text-white selection:bg-blue selection:text-white md:inline-flex md:flex-row md:whitespace-nowrap md:rounded-full md:py-2 md:pr-2 md:pl-6 lg:text-base">
       <span>npm create sanity@latest</span>
       <button
         aria-label="Copy to clipboard"

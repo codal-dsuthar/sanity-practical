@@ -27,7 +27,7 @@ const Post = ({ post }: { post: AllPostsQueryResult[number] }) => {
 
   return (
     <article
-      className="group relative flex flex-col justify-between rounded-xl border border-neutral-200 bg-white p-6 shadow-sm transition-all hover:shadow"
+      className="group relative flex flex-col justify-between rounded-xl border border-neutral-200 bg-white p-6 transition-all"
       data-sanity={attr()}
       key={_id}
     >
@@ -66,7 +66,7 @@ const Posts = ({
 }) => (
   <div>
     {heading && (
-      <h2 className="font-bold text-3xl text-gray-900 tracking-tight sm:text-4xl lg:text-5xl">
+      <h2 className="heading font-bold text-gray-900 tracking-tight">
         {heading}
       </h2>
     )}

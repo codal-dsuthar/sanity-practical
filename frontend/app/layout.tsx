@@ -49,7 +49,19 @@ export async function generateMetadata(): Promise<Metadata> {
       default: title,
     },
     description: toPlainText(description),
+    applicationName: title,
+    themeColor: [{ media: "(prefers-color-scheme: light)", color: "#ffffff" }],
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: toPlainText(description),
+      images: ogImage ? [ogImage.url] : [],
+    },
     openGraph: {
+      type: "website",
+      title,
+      description: toPlainText(description),
+      siteName: title,
       images: ogImage ? [ogImage] : [],
     },
   };

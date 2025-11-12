@@ -35,7 +35,7 @@ function HeroContent({
     <div className="flex flex-col space-y-4">
       <motion.h1
         animate={{ opacity: 1, y: 0 }}
-        className="font-bold text-4xl tracking-tight sm:text-6xl lg:text-7xl xl:text-8xl"
+        className="heading font-bold tracking-tight"
         initial={{ opacity: 0, y: 20 }}
         transition={{ duration: 0.8, ease }}
       >
