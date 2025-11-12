@@ -1,8 +1,8 @@
 import type { Metadata, ResolvingMetadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { PortableTextBlock } from "next-sanity";
 import { Suspense } from "react";
-
 import Avatar from "@/app/components/avatar";
 import CoverImage from "@/app/components/cover-image";
 import PortableText from "@/app/components/portable-text";
@@ -11,6 +11,7 @@ import { getAuthorNames } from "@/lib/utils";
 import { sanityFetch } from "@/sanity/lib/live";
 import { postPagesSlugs, postQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
+import type { PostQueryResult } from "@/sanity.types";
 
 const WHITESPACE_REGEX = /\s+/g;
 
@@ -70,9 +71,8 @@ export async function generateMetadata(
 
 export default async function PostPage(props: Props) {
   const params = await props.params;
-  const [{ data: post }] = await Promise.all([
-    sanityFetch({ query: postQuery, params }),
-  ]);
+  const { data: postRaw } = await sanityFetch({ query: postQuery, params });
+  const post = postRaw as PostQueryResult | null;
 
   if (!post?._id) {
     return notFound();
@@ -102,6 +102,24 @@ export default async function PostPage(props: Props) {
                   <Avatar date={post.date} person={post.author} />
                 )}
                 <div className="ml-1">{readingTime} min read</div>
+                <div className="ml-auto flex gap-2">
+                  {Array.isArray(post?.categories)
+                    ? (
+                        post.categories as Array<{
+                          slug: string;
+                          title: string;
+                        }>
+                      ).map((category) => (
+                        <Link
+                          className="rounded-full bg-gray-100 px-3 py-1 font-medium text-gray-600 text-xs transition-colors hover:bg-gray-200"
+                          href={`/categories/${category.slug}`}
+                          key={category.slug}
+                        >
+                          {category.title}
+                        </Link>
+                      ))
+                    : null}
+                </div>
               </div>
             </div>
             <article className="mx-auto grid max-w-3xl gap-6">

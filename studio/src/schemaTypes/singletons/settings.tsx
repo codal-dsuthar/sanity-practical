@@ -13,6 +13,11 @@ export const settings = defineType({
   title: 'Settings',
   type: 'document',
   icon: CogIcon,
+  // Set the document ID to ensure there is only one settings document
+  // Learn more: https://www.sanity.io/docs/document-type#b44e26ae00ee
+  options: {
+    singleton: true,
+  },
   fields: [
     defineField({
       name: 'title',
@@ -110,6 +115,20 @@ export const settings = defineType({
           },
         }),
       ],
+    }),
+    defineField({
+      name: 'heroTitle',
+      description: 'This field is the title of the hero section.',
+      title: 'Hero Title',
+      type: 'string',
+      initialValue: demo.heroTitle,
+    }),
+    defineField({
+      name: 'heroDescription',
+      description: 'This field is the description of the hero section.',
+      title: 'Hero Description',
+      type: 'text',
+      initialValue: demo.heroDescription,
     }),
     defineField({
       name: 'ogImage',

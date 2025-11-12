@@ -1,6 +1,6 @@
 import { defineLive } from "next-sanity/live";
 import { client } from "./client";
-import { token } from "./token";
+import { token, writeToken } from "./token";
 
 /**
  * Use defineLive to enable automatic revalidation and refreshing of your fetched content
@@ -9,6 +9,6 @@ import { token } from "./token";
 
 export const { sanityFetch, SanityLive } = defineLive({
   client,
-  serverToken: token,
+  serverToken: writeToken,
   browserToken: token,
 });

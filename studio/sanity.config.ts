@@ -16,6 +16,7 @@ import {
   type DocumentLocation,
 } from 'sanity/presentation'
 import {assist} from '@sanity/assist'
+import {singletonActions} from './src/lib/documentActions'
 
 // Environment variables for project configuration
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'your-projectID'
@@ -66,15 +67,15 @@ export default defineConfig({
         mainDocuments: defineDocuments([
           {
             route: '/',
-            filter: `_type == "settings" && _id == "siteSettings"`,
-          },
-          {
-            route: '/:slug',
-            filter: `_type == "page" && slug.current == $slug || _id == $slug`,
+            filter: `_type == "home" && _id == "homePage"`,
           },
           {
             route: '/posts/:slug',
-            filter: `_type == "post" && slug.current == $slug || _id == $slug`,
+            filter: `_type == "post" && (slug.current == $slug || _id == $slug)`,
+          },
+          {
+            route: '/:slug',
+            filter: `_type == "page" && (slug.current == $slug || _id == $slug)`,
           },
         ]),
         // Locations Resolver API allows you to define where data is being used in your application. https://www.sanity.io/docs/presentation-resolver-api#8d8bca7bfcd7
@@ -82,6 +83,11 @@ export default defineConfig({
           settings: defineLocations({
             locations: [homeLocation],
             message: 'This document is used on all pages',
+            tone: 'positive',
+          }),
+          home: defineLocations({
+            locations: [homeLocation],
+            message: 'This is the home page',
             tone: 'positive',
           }),
           page: defineLocations({
@@ -131,5 +137,10 @@ export default defineConfig({
   // Schema configuration, imported from ./src/schemaTypes/index.ts
   schema: {
     types: schemaTypes,
+  },
+
+  // Document actions configuration
+  document: {
+    actions: singletonActions,
   },
 })

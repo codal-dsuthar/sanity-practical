@@ -1,6 +1,12 @@
 import React from "react";
 
 import Cta from "@/app/components/cta";
+import FeaturesGrid, {
+  type FeaturesGrid as FeaturesGridType,
+} from "@/app/components/features-grid";
+import ImageText, {
+  type ImageText as ImageTextType,
+} from "@/app/components/image-text";
 import Info from "@/app/components/info-section";
 import { dataAttr } from "@/sanity/lib/utils";
 import type { CallToAction, InfoSection } from "@/sanity.types";
@@ -34,9 +40,22 @@ const InfoAdapter: React.FC<BlockComponentProps> = ({ block, index }) => (
   <Info block={block as unknown as InfoSection} index={index} />
 );
 
+const FeaturesGridAdapter: React.FC<BlockComponentProps> = ({
+  block,
+  index,
+}) => (
+  <FeaturesGrid block={block as unknown as FeaturesGridType} index={index} />
+);
+
+const ImageTextAdapter: React.FC<BlockComponentProps> = ({ block, index }) => (
+  <ImageText block={block as unknown as ImageTextType} index={index} />
+);
+
 const Blocks: BlocksType = {
   callToAction: CtaAdapter,
   infoSection: InfoAdapter,
+  featuresGrid: FeaturesGridAdapter,
+  imageText: ImageTextAdapter,
 };
 
 /**

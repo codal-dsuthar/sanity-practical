@@ -2,9 +2,9 @@
   "name": "frontend",
   "private": true,
   "scripts": {
-    "prebuild": "npm run typegen",
+    "prebuild": "pnpm typegen",
     "build": "next build",
-    "predev": "npm run typegen",
+    "predev": "pnpm typegen",
     "dev": "next dev --turbopack",
     "lint": "npx ultracite check",
     "fix-lint": "npx ultracite fix",

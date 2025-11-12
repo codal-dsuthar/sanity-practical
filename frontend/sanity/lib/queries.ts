@@ -2,7 +2,14 @@ import { defineQuery } from "next-sanity";
 
 export const settingsQuery = defineQuery(`*[_type == "settings"][0]`);
 
-const postFields = /* groq */ `
+const linkReference = `
+  _type == "link" => {
+    "page": page->slug.current,
+    "post": post->slug.current
+  }
+`;
+
+const postFields = `
   _id,
   "status": select(_originalId in path("drafts.**") => "draft", "published"),
   "title": coalesce(title, "Untitled"),
@@ -17,17 +24,48 @@ const postFields = /* groq */ `
     "picture": headshotImage
   },
   tags,
+  categories[]->{
+    title,
+    "slug": slug.current
+  },
   featured,
 `;
 
-const linkReference = /* groq */ `
-  _type == "link" => {
-    "page": page->slug.current,
-    "post": post->slug.current
+export const homeQuery = defineQuery(`
+  *[_type == "home" && _id == "homePage"][0]{
+    _id,
+    _type,
+    title,
+    heroTitle,
+    heroTitleHighlight,
+    heroDescription,
+    heroPrimaryAction,
+    heroSecondaryAction,
+    heroPill,
+    showPostsSection,
+    "pageBuilder": pageBuilder[]{
+      ...,
+      _type == "imageText" => {
+        ...,
+        "image": image{
+          ...,
+          asset->
+        }
+      },
+      _type == "infoSection" => {
+        content[]{
+          ...,
+          markDefs[]{
+            ...,
+            ${linkReference}
+          }
+        }
+      },
+    },
   }
-`;
+`);
 
-const linkFields = /* groq */ `
+const linkFields = `
   link {
       ...,
       ${linkReference}

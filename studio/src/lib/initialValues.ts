@@ -57,3 +57,15 @@ export const description = [
 ]
 
 export const ogImageTitle = 'A Next.js Blog with a Native Authoring Experience'
+
+export const heroTitle = 'Our Blog'
+
+export const heroDescription =
+  'Thoughts, tutorials and updates from the team — focused on practical web dev.'
+
+// Home page initial values
+export const homeTitle = 'Home'
+export const homeHeroTitle = 'Our Blog'
+export const homeHeroDescription =
+  'Thoughts, tutorials and updates from the team — focused on practical web dev.'
+
